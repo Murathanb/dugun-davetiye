@@ -291,9 +291,9 @@
     <p class="countdown" id="countdown"></p>
     <div class="actions">
       <a id="mapLink" href="#" rel="noopener">Konumu aç</a>
-      <button type="button" id="calBtn">Takvime ekle</button>
+      <button type="button" id="saveBtn">Davetiyeyi kaydet</button>
     </div>
-    <p class="cal-fallback" id="calFallback">Açılmadıysa <a id="calAlt" href="#" rel="noopener">şuradan ekleyin</a>.</p>
+    <p class="cal-fallback" id="saveNote">İnmediyse <a href="davetiye.png" download>davetiyeye buradan ulaşın</a>.</p>
   </section>
 </main>
 
@@ -369,30 +369,27 @@
   mapLink.href=href; mapLink.textContent=text; mapBox.href=href;
   if(!isIOS&&!isAndroid){ mapLink.target="_blank"; mapBox.target="_blank"; }
 
-  /* takvim */
-  var cal=document.getElementById("calBtn");
-  var gcal="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(CONFIG.title)
-    +"&dates="+utc(start)+"/"+utc(end)+"&location="+q+"&details="+encodeURIComponent(CONFIG.note);
-  cal.textContent=isAndroid?"Google Takvim'e ekle":"Takvime ekle";
-  function fold(l){var o="",i=0;while(l.length-i>74){o+=l.substr(i,74)+"\r\n ";i+=74;}return o+l.substr(i);}
-  function esc(s){return String(s).replace(/([,;\\])/g,"\\$1").replace(/\n/g,"\\n");}
-  function ics(){
-    return ["BEGIN:VCALENDAR","VERSION:2.0","CALSCALE:GREGORIAN","METHOD:PUBLISH","PRODID:-//Sena Murathan//Dugun//TR",
-      "BEGIN:VEVENT","UID:sena-murathan-30ekim2026@dugun.invite","DTSTAMP:"+utc(new Date()),
-      "DTSTART:"+utc(start),"DTEND:"+utc(end),fold("SUMMARY:"+esc(CONFIG.title)),
-      fold("LOCATION:"+esc(CONFIG.venue+", "+CONFIG.address)),fold("DESCRIPTION:"+esc(CONFIG.note)),
-      "GEO:"+CONFIG.coords.replace(",",";"),
-      "BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:"+esc(CONFIG.title),"END:VALARM",
-      "END:VEVENT","END:VCALENDAR"].join("\r\n");
-  }
-  var fb=document.getElementById("calFallback"), alt=document.getElementById("calAlt");
-  alt.href=gcal; alt.target="_blank";
-  cal.addEventListener("click",function(){
-    if(isAndroid){ window.open(gcal,"_blank","noopener"); return; }
-    var url=URL.createObjectURL(new Blob(["\ufeff"+ics()],{type:"text/calendar;charset=utf-8"}));
-    var a=document.createElement("a"); a.href=url; a.download="sena-murathan-dugun.ics"; a.rel="noopener";
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(function(){URL.revokeObjectURL(url);},4000); fb.classList.add("show");
+  /* davetiyeyi fotoğraf olarak kaydet */
+  var saveBtn=document.getElementById("saveBtn"), saveNote=document.getElementById("saveNote");
+  saveBtn.addEventListener("click", async function(){
+    saveBtn.disabled=true;
+    var eski=saveBtn.textContent; saveBtn.textContent="Hazırlanıyor...";
+    try{
+      var res=await fetch("davetiye.png",{cache:"force-cache"});
+      if(!res.ok) throw new Error("yok");
+      var blob=await res.blob();
+      var file=new File([blob],"sena-murathan-davetiye.png",{type:blob.type||"image/png"});
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        await navigator.share({files:[file], title:"Sena & Murathan"});
+      } else {
+        var u=URL.createObjectURL(blob);
+        var a=document.createElement("a"); a.href=u; a.download="sena-murathan-davetiye.png";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(u); },4000);
+        saveNote.classList.add("show");
+      }
+    }catch(e){ saveNote.classList.add("show"); }
+    saveBtn.textContent=eski; saveBtn.disabled=false;
   });
 
   /* okaliptüs dalları */
