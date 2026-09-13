@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sena &amp; Murathan · 30 Ekim 2026</title>
+<meta name="description" content="Sena ve Murathan'ın düğününe davetlisiniz. 30 Ekim 2026 Cuma, 19.00 — Yenerhan Wedding Kır Alanı, Osmaniye.">
+<meta property="og:title" content="Sena &amp; Murathan — Davetlisiniz">
+<meta property="og:description" content="30 Ekim 2026 Cuma, 19.00 · Yenerhan Wedding Kır Alanı, Osmaniye / Merkez">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sena &amp; Murathan">
+<meta property="og:locale" content="tr_TR">
+
+<!-- ▼▼▼ YAYINA ALDIKTAN SONRA SADECE ŞU İKİ SATIRI DEĞİŞTİR ▼▼▼
+     ADRESIN yerine sitenin gerçek adresini yaz (örn. sena-murathan.netlify.app).
+     WhatsApp'ta linkin altında görünen kapak buradan geliyor; adres yanlışsa kapak çıkmaz. -->
+<meta property="og:url" content="https://ADRESIN/">
+<meta property="og:image" content="https://ADRESIN/davetiye-onizleme.jpg">
+<!-- ▲▲▲ ---------------------------------------------------- ▲▲▲ -->
+
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sena ve Murathan — 30 Ekim 2026">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sena &amp; Murathan — Davetlisiniz">
+<meta name="twitter:description" content="30 Ekim 2026 Cuma, 19.00 · Yenerhan Wedding Kır Alanı, Osmaniye / Merkez">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23FBF6F0'/><ellipse cx='12' cy='16' rx='8' ry='4.6' fill='%23AEB59D' transform='rotate(-22 12 16)'/><ellipse cx='21' cy='16' rx='8' ry='4.6' fill='%23C3CAB3' transform='rotate(22 21 16)'/><circle cx='16.5' cy='16' r='2' fill='%23B08D4F'/></svg>">
+<meta name="theme-color" content="#FBF6F0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  /* renkler orijinal davetiyeden örneklendi */
+  :root{
+    --paper:#FBF6F0; --paper-warm:#F4EFE6;
+    --ink:#2A3026; --ink-soft:#54564C;
+    --sage:#AEB59D; --sage-light:#C3CAB3; --sage-deep:#8E9A7C;
+    --gold:#9A8E6C; --gold-pale:#BFB6A0; --rule:#B5B4AA;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0; min-height:100svh; overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 0%, #FDFAF6 0%, var(--paper) 48%, var(--paper-warm) 100%);
+    color:var(--ink); font-family:"Cormorant Garamond",Garamond,"Times New Roman",serif;
+    font-weight:300; -webkit-font-smoothing:antialiased;
+  }
+  body.opened{overflow:auto;}
+
+  .grain{position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.42; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.3'/></svg>");}
+  .vignette{position:fixed; inset:0; z-index:59; pointer-events:none;
+    background:radial-gradient(78% 62% at 50% 44%, rgba(0,0,0,0) 55%, rgba(74,66,48,.08) 100%);}
+  .bloom{position:fixed; left:50%; top:50%; width:150vmax; height:150vmax; margin:-75vmax 0 0 -75vmax;
+    z-index:33; pointer-events:none; opacity:0;
+    background:radial-gradient(closest-side, rgba(255,250,240,.85), rgba(191,182,160,.22) 38%, rgba(255,255,255,0) 70%);}
+  .bloom.on{animation:bloom 2.6s ease-out forwards;}
+  @keyframes bloom{0%{opacity:0; transform:scale(.4)}35%{opacity:.8}100%{opacity:0; transform:scale(1)}}
+  .petals{position:fixed; inset:0; z-index:55; pointer-events:none; overflow:hidden;}
+  .petal{position:absolute; top:-8vh; opacity:0; will-change:transform;}
+  @keyframes fall{0%{opacity:0; transform:translate3d(0,-10vh,0) rotate(0)}12%{opacity:.75}80%{opacity:.6}
+    100%{opacity:0; transform:translate3d(var(--dx,30px),112vh,0) rotate(var(--spin,220deg))}}
+
+  /* ================= ZARF ================= */
+  .cover{position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:clamp(1.4rem,5vh,2.2rem); padding:6vh 1.25rem; transition:opacity 1.1s ease, visibility 1.1s ease;}
+  .cover-back{z-index:30; background:inherit;}
+  .cover-front{z-index:40; cursor:pointer;}
+  .cover.gone{opacity:0; visibility:hidden;}
+  .cover.gone .env{transform:scale(.95) translateY(10px);}
+
+  .env{position:relative; width:min(56vw,215px); aspect-ratio:.705;
+    opacity:0; transform:translateY(24px) scale(.96);
+    transition:opacity 1.2s ease, transform 1.2s cubic-bezier(.22,.9,.24,1);}
+  body.ready .env{opacity:1; transform:none;}
+  .env-shadow{position:absolute; left:9%; right:9%; bottom:-6%; height:10%;
+    background:radial-gradient(50% 50% at 50% 50%, rgba(60,60,40,.28), rgba(0,0,0,0) 70%); filter:blur(3px);
+    transition:opacity .9s ease, transform .9s ease;}
+  .env.open .env-shadow{opacity:.5; transform:scaleX(1.08);}
+  .env-liner{position:absolute; inset:0; background:linear-gradient(168deg,#EFE6D4,#DFD4BC);
+    border:1px solid rgba(154,142,108,.4); box-shadow:inset 0 0 26px rgba(140,120,80,.18);}
+  .env-pocket{position:absolute; inset:0; overflow:hidden;
+    background:linear-gradient(172deg,#F7F1E5 0%,#EAE2D1 100%);
+    clip-path:polygon(0 5%,50% 41%,100% 5%,100% 100%,0 100%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.7);}
+  .env-pocket::before,.env-pocket::after{content:""; position:absolute; top:5%; width:50%; height:36%;
+    border-top:1px solid rgba(154,142,108,.26);}
+  .env-pocket::before{left:0; transform-origin:top left; transform:rotate(35.8deg);}
+  .env-pocket::after{right:0; transform-origin:top right; transform:rotate(-35.8deg);}
+  .pocket-light{position:absolute; inset:0; opacity:0; transition:opacity 1s ease;
+    background:linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 55%);}
+  .env.open .pocket-light{opacity:1;}
+
+  .stage3d{position:absolute; inset:0; perspective:1400px;}
+  .flap{position:absolute; left:0; right:0; top:0; height:46%; transform-origin:top center;}
+  /* 1. aşama: zarfın önünde, 0° → -90° */
+  .flap-a{transform:rotateX(0deg); transition:transform .42s cubic-bezier(.5,.02,.72,.44);
+    background:linear-gradient(176deg,#F8F2E6,#EDE5D2); clip-path:polygon(0 0,100% 0,50% 100%);
+    box-shadow:0 3px 7px -4px rgba(42,48,38,.4); backface-visibility:hidden;}
+  .env.open .flap-a{transform:rotateX(-90deg);}
+  .flap-a.done{visibility:hidden;}
+  /* 2. aşama: zarfın arkasında, -90° → -172° (açık kalır, zarfla birlikte kaybolur) */
+  .flap-b{transform:rotateX(-90deg); visibility:hidden;
+    transition:transform .62s cubic-bezier(.24,.62,.3,1);
+    background:linear-gradient(176deg,#DFE6D5,#C8D4BA); clip-path:polygon(0 0,100% 0,50% 100%);
+    box-shadow:inset 0 0 16px rgba(90,110,75,.32);}
+  .flap-b.show{visibility:visible; transform:rotateX(-172deg);}
+
+  .seal{position:absolute; left:50%; top:41%; width:3.4rem; height:3.4rem; margin:-1.7rem 0 0 -1.7rem;
+    border-radius:50%; color:#EFE7D2; display:grid; place-items:center; z-index:5;
+    background:radial-gradient(circle at 33% 28%, rgba(255,255,255,.3), rgba(255,255,255,0) 46%),
+               radial-gradient(circle at 60% 70%, #4A573E, #36412E);
+    font-size:.8rem; letter-spacing:.16em; text-indent:.16em;
+    box-shadow:0 8px 18px -8px rgba(30,40,26,.8), inset 0 0 0 1px rgba(191,182,160,.4);
+    transition:transform .5s cubic-bezier(.34,1.25,.5,1), opacity .4s ease;}
+  .seal::after{content:""; position:absolute; inset:-2px; border-radius:50%;
+    border:1px solid rgba(191,182,160,.9); opacity:0;}
+  .env.open .seal{transform:scale(.3) translateY(18px) rotate(-14deg); opacity:0;}
+  .env.open .seal::after{animation:ring .7s ease-out forwards;}
+  @keyframes ring{0%{opacity:.9; transform:scale(1)}100%{opacity:0; transform:scale(2.4)}}
+
+  .note{text-align:center; opacity:0; transition:opacity 1s ease .45s;}
+  body.ready .note{opacity:1;}
+  .cover.opening .note{opacity:0; transition:opacity .4s ease;}
+  .note .script{font-family:"Pinyon Script",cursive; font-size:clamp(1.9rem,8vw,2.5rem); color:var(--gold); line-height:1.15;}
+  .note .hint{margin-top:.85rem; font-size:.74rem; letter-spacing:.34em; color:var(--ink-soft);
+    animation:breathe 3.2s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{opacity:.4}50%{opacity:.95}}
+  .cover-back .note{visibility:hidden;}
+
+  /* ================= DAVETİYE ================= */
+  .card-wrap{position:relative; z-index:35; min-height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:clamp(.7rem,3.5vw,2rem) clamp(.6rem,3.5vw,2rem) clamp(1.2rem,5vw,2rem);
+    gap:clamp(1.1rem,4vw,1.7rem);}
+  .card{font-variant-numeric:lining-nums; font-feature-settings:"lnum" 1;
+    position:relative; width:min(100%,520px); aspect-ratio:901/1280; container-type:inline-size;
+    background:linear-gradient(170deg,#FDFAF5 0%,var(--paper) 45%,#F6F1E7 100%);
+    overflow:hidden; transform-origin:center center;
+    box-shadow:0 40px 80px -60px rgba(42,48,38,.65), 0 1px 0 rgba(255,255,255,.85) inset;}
+  .card.in-env{box-shadow:0 10px 20px -12px rgba(30,40,26,.85);}
+
+  .frame{position:absolute; left:6.1%; top:6.1cqw; right:6.1%; bottom:6.1cqw;
+    border:1px solid var(--gold-pale); pointer-events:none; z-index:1;}
+  .sheen{position:absolute; top:-20%; bottom:-20%; width:55%; left:-70%; z-index:4; pointer-events:none;
+    background:linear-gradient(100deg, rgba(255,255,255,0), rgba(255,255,255,.45), rgba(255,255,255,0));
+    transform:skewX(-14deg);}
+  .card.landed .sheen{animation:sweep 1.9s cubic-bezier(.4,0,.2,1) .15s 1;}
+  @keyframes sweep{from{left:-70%}to{left:130%}}
+
+  .vine{position:absolute; z-index:0; pointer-events:none;}
+  .vine--tl{top:-1cqw; left:-2cqw; width:26cqw;}
+  .vine--br{bottom:-1cqw; right:-2cqw; width:27cqw; transform:rotate(180deg);}
+
+  .t{position:absolute; white-space:nowrap; line-height:1; z-index:2; margin:0; left:50%;}
+  .t.c{transform:translateX(-50%);}
+  .serif{font-family:"Cormorant Garamond",Garamond,serif; font-weight:400;}
+  .script{font-family:"Pinyon Script",cursive; font-weight:400;}
+  .muted{color:var(--ink-soft);} .goldc{color:var(--gold);} .sagec{color:var(--sage-deep);}
+  .rule{position:absolute; height:1px; background:var(--rule); z-index:2;}
+  .vbar{position:absolute; width:1px; background:var(--rule); z-index:2;}
+
+  /* konum madalyonu — çerçeveyle aynı saç teli kalınlığında, gravür gibi */
+  .mapmark{position:absolute; z-index:3; display:block; color:var(--gold); text-decoration:none;
+    transition:color .45s ease, transform .45s cubic-bezier(.22,.9,.24,1);}
+  .mapmark svg{width:100%; height:100%; display:block; overflow:visible;}
+  .mapmark .ring{transition:stroke-dasharray .6s ease;}
+  .mapmark:hover,.mapmark:focus-visible{color:var(--ink); transform:translateY(-2%);}
+
+  /* köşe dalları: açılışta büyür, yerleştikten sonra çok yavaş bir esinti */
+  .stem{stroke-dasharray:var(--L,600); stroke-dashoffset:var(--L,600);
+    transition:stroke-dashoffset 2s ease .15s;}
+  .card.landed .stem{stroke-dashoffset:0;}
+  .pop{transform-box:fill-box; transform-origin:center; opacity:0;}
+  .card.landed .pop{animation:pop .85s cubic-bezier(.22,.9,.24,1) var(--pd,0s) forwards;}
+  @keyframes pop{from{opacity:0; transform:scale(.15)}to{opacity:1; transform:scale(1)}}
+  .leaf{transform-box:fill-box; transform-origin:center; will-change:transform;}
+  .card.landed .leaf{animation:sway var(--sd,9s) ease-in-out var(--sl,3s) infinite;}
+  @keyframes sway{
+    0%{transform:rotate(0deg)} 25%{transform:rotate(1.5deg)}
+    50%{transform:rotate(0deg)} 75%{transform:rotate(-1.5deg)}
+    100%{transform:rotate(0deg)}
+  }
+  .dot{transform-box:fill-box; transform-origin:center;}
+  .card.landed .dot{animation:twinkle var(--sd,8s) ease-in-out var(--sl,3s) infinite;}
+  @keyframes twinkle{0%{opacity:.6}50%{opacity:1}100%{opacity:.6}}
+  .vroot{transform-box:view-box; will-change:transform;}
+  .card.landed .vroot{animation:breeze 17s ease-in-out 2.8s infinite;}
+  @keyframes breeze{0%{transform:rotate(0deg)}50%{transform:rotate(.85deg)}100%{transform:rotate(0deg)}}
+
+  /* JS çalışmazsa yaklaşık ölçüler */
+  .fam{font-size:2.35cqw; letter-spacing:.14em;} .sur{font-size:3.03cqw; letter-spacing:.22em;}
+  .ve-s{font-size:4.4cqw;} .ail{font-size:5cqw;}
+  .nm{font-size:6.39cqw; letter-spacing:.1em;} .ve-c{font-size:2.02cqw; letter-spacing:.5em;}
+  .wsh{font-size:2.02cqw; letter-spacing:.18em;} .mon{font-size:2.02cqw; letter-spacing:.26em;}
+  .day{font-size:6cqw;} .yr{font-size:1.85cqw; letter-spacing:.2em;}
+  .sub{font-size:2.18cqw; letter-spacing:.3em;} .ven{font-size:2.18cqw; letter-spacing:.2em;}
+  .cty{font-size:2.02cqw; letter-spacing:.28em;} .lbl{font-size:1.68cqw; letter-spacing:.2em;}
+  .dvt{font-size:6.2cqw;}
+
+  .after{width:min(100%,520px); text-align:center; opacity:0; transform:translateY(12px);
+    transition:opacity 1s ease, transform 1s cubic-bezier(.22,.9,.24,1);}
+  body.opened .after{opacity:1; transform:none;}
+  .countdown{margin:0 0 .9rem; font-size:.95rem; letter-spacing:.16em; color:var(--gold);}
+  .actions{display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem;}
+  .actions a,.actions button{font-family:inherit; font-size:.9rem; letter-spacing:.12em; color:var(--ink);
+    text-decoration:none; background:rgba(255,255,255,.55); border:1px solid var(--gold-pale); border-radius:2px;
+    padding:.75rem 1.3rem; cursor:pointer; transition:background .4s ease, color .4s ease, border-color .4s ease;}
+  .actions a:hover,.actions button:hover,.actions a:focus-visible,.actions button:focus-visible{
+    background:var(--ink); color:var(--paper); border-color:var(--ink);}
+  .cal-fallback{display:none; margin:.85rem 0 0; font-size:.85rem; color:var(--ink-soft);}
+  .cal-fallback a{color:var(--gold);} .cal-fallback.show{display:block;}
+
+  :focus-visible{outline:2px solid var(--sage-deep); outline-offset:5px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition-duration:.01ms !important;}
+    .pop{opacity:1 !important;} .stem{stroke-dashoffset:0 !important;}
+  }
+</style>
+<noscript><style>.cover{display:none !important;} body{overflow:auto;} .after{opacity:1; transform:none;}</style></noscript>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+<div class="bloom" id="bloom" aria-hidden="true"></div>
+<div class="petals" id="petals" aria-hidden="true"></div>
+
+<!-- zarfın arkası + açılınca arkaya devrilen kapak -->
+<div class="cover cover-back" id="coverBack" aria-hidden="true">
+  <div class="env">
+    <span class="env-shadow"></span>
+    <span class="env-liner"></span>
+    <span class="stage3d"><span class="flap flap-b" id="flapB"></span></span>
+  </div>
+  <div class="note"><div class="script">Davetlisiniz</div><div class="hint">zarfa dokunun</div></div>
+</div>
+
+<main class="card-wrap">
+  <article class="card" id="card">
+    <span class="frame" aria-hidden="true"></span>
+    <span class="sheen" aria-hidden="true"></span>
+    <svg class="vine vine--tl" viewBox="0 0 200 420" fill="none" aria-hidden="true">
+      <path class="stem" d="M36 0 C 28 92, 76 132, 68 222 C 62 302, 94 342, 90 420" stroke="#9CA88C" stroke-width="1.6"/>
+    </svg>
+    <svg class="vine vine--br" viewBox="0 0 200 420" fill="none" aria-hidden="true">
+      <path class="stem" d="M50 0 C 42 82, 86 130, 76 216 C 68 298, 102 346, 96 420" stroke="#9CA88C" stroke-width="1.6"/>
+    </svg>
+
+    <span class="t c serif fam muted" data-k="famL">İBRAHİM &amp; ZÜBEYDE</span>
+    <span class="t c script ve-s sagec" data-k="ve">ve</span>
+    <span class="t c serif fam muted" data-k="famR">FARUK &amp; HAYRİYE</span>
+    <span class="t c serif sur" data-k="surL">BAYAR</span>
+    <span class="t c serif sur" data-k="surR">MART</span>
+    <span class="t c script ail goldc" data-k="ail">Aileleri</span>
+    <span class="rule" data-k="rule1" aria-hidden="true"></span>
+
+    <h1 class="t c serif nm" data-k="sena">SENA</h1>
+    <span class="t c serif ve-c sagec" data-k="veC">VE</span>
+    <span class="t c serif nm" data-k="murathan">MURATHAN</span>
+
+    <span class="t c serif wsh muted" data-k="wish1">SİZLERİ ARAMIZDA GÖRMEKTEN ONUR</span>
+    <span class="t c serif wsh muted" data-k="wish2">DUYARIZ.</span>
+
+    <span class="rule" data-k="ruleL" aria-hidden="true"></span>
+    <span class="t c serif mon" data-k="ekim">EKİM</span>
+    <span class="t c serif day" data-k="gun">30</span>
+    <span class="t c serif yr muted" data-k="yil">2026</span>
+    <span class="rule" data-k="ruleR" aria-hidden="true"></span>
+    <span class="t c serif sub muted" data-k="cuma">CUMA &nbsp;·&nbsp; 19.00</span>
+
+    <span class="t c serif ven" data-k="ven1">YENERHAN WEDDING</span>
+    <span class="t c serif ven" data-k="ven2">KIR ALANI</span>
+    <span class="t c serif cty muted" data-k="city">OSMANİYE / MERKEZ</span>
+
+    <a class="mapmark" id="mapBox" href="#" rel="noopener" aria-label="Konumu haritada aç">
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" aria-hidden="true">
+        <circle cx="32" cy="32" r="31" stroke-width="1" opacity=".6"/>
+        <path d="M32 45.5c0-5.5 8.5-9.8 8.5-16.7a8.5 8.5 0 1 0-17 0c0 6.9 8.5 11.2 8.5 16.7z"
+              stroke-width="1.1" stroke-linejoin="round"/>
+        <circle cx="32" cy="28.6" r="3.1" stroke-width="1"/>
+      </svg>
+    </a>
+    <span class="t serif lbl muted" data-k="lbl1">KONUM İÇİN</span>
+    <span class="t serif lbl muted" data-k="lbl2">HARİTAYA DOKUNUN</span>
+    <span class="vbar" data-k="vbar" aria-hidden="true"></span>
+    <span class="t c script dvt goldc" data-k="dvt">Davetlisiniz</span>
+  </article>
+
+  <section class="after">
+    <p class="countdown" id="countdown"></p>
+    <div class="actions">
+      <a id="mapLink" href="#" rel="noopener">Konumu aç</a>
+      <button type="button" id="calBtn">Takvime ekle</button>
+    </div>
+    <p class="cal-fallback" id="calFallback">Açılmadıysa <a id="calAlt" href="#" rel="noopener">şuradan ekleyin</a>.</p>
+  </section>
+</main>
+
+<!-- zarfın önü -->
+<div class="cover cover-front" id="coverFront">
+  <div class="env" id="envFront" role="button" tabindex="0" aria-label="Davetiyeyi aç">
+    <span class="env-pocket"><span class="pocket-light"></span></span>
+    <span class="stage3d"><span class="flap flap-a" id="flapA"></span></span>
+    <span class="seal" aria-hidden="true">S M</span>
+  </div>
+  <div class="note"><div class="script">Davetlisiniz</div><div class="hint">zarfa dokunun</div></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var CONFIG={
+    venue:"Yenerhan Wedding Kır Alanı",
+    address:"Yenerhan, Musa Şahin Bulvarı, Akyar, 80000 Osmaniye Merkez",
+    coords:"37.0567865,36.2056197", placeId:"ChIJsXQu2jMhLxURBUL-21wxdeY",
+    start:"2026-10-30T19:00:00+03:00", endHours:5,
+    title:"Sena & Murathan'ın düğünü", note:"Sizleri aramızda görmekten onur duyarız."
+  };
+
+  /* orijinal davetiyeden ölçülen oranlar — hepsi kart genişliğine göre.
+     cap: büyük harf yüksekliği · w: satır genişliği · top: mürekkebin üst kenarı · cx: merkez  */
+  var SPEC={
+    famL:{base:.1476, cap:.0144, w:.2758, cx:.3013},
+    ve:  {top:.1354, w:.0333, cx:.5070, script:1},
+    famR:{base:.1476, cap:.0144, w:.2440, cx:.6963},
+    surL:{base:.2009, cap:.0189, w:.1244, cx:.3008},
+    surR:{base:.2009, cap:.0189, w:.1088, cx:.6947},
+    ail: {top:.2464, w:.1321, cx:.5000, script:1},
+    sena:{base:.4795, cap:.0411, w:.1809, cx:.4978},
+    veC: {base:.5316, cap:.0133, w:.0333, cx:.4961},
+    murathan:{base:.6149, cap:.0411, w:.4251, cx:.4956},
+    wish1:{base:.6881, cap:.0155, w:.5161, cx:.4978},
+    wish2:{base:.7270, cap:.0155, w:.1210, cx:.4978},
+    ekim:{base:.8257, cap:.0122, w:.0588, cx:.4123},
+    gun: {base:.8396, cap:.0400, w:.0620, cx:.5055},
+    yil: {base:.8257, cap:.0122, w:.0477, cx:.5888},
+    cuma:{base:.8846, cap:.0122, w:.1987, cx:.4967},
+    ven1:{base:.9600, cap:.0144, w:.3141, cx:.4967},
+    ven2:{base:1.0033, cap:.0144, w:.1543, cx:.4967},
+    city:{base:1.0511, cap:.0144, w:.2752, cx:.4972},
+    lbl1:{base:1.2697, cap:.0122, w:.1365, lx:.3318},
+    lbl2:{base:1.3019, cap:.0122, w:.1998, lx:.3318},
+    dvt: {top:1.2431, w:.2375, cx:.7492, script:1}
+  };
+  var BOX={
+    rule1:{y:.3563, x:.4262, w:.1465},
+    ruleL:{y:.8213, x:.2486, w:.0888},
+    ruleR:{y:.8213, x:.6626, w:.0888},
+    mapbox:{cx:.2453, cy:1.2819, d:.0954},
+    vbar:{x:.5960, y:1.2400, h:.0720}
+  };
+
+  var ua=navigator.userAgent||"";
+  var isIOS=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  var isAndroid=/Android/.test(ua);
+  var label=encodeURIComponent(CONFIG.venue), q=encodeURIComponent(CONFIG.venue+", "+CONFIG.address);
+  var start=new Date(CONFIG.start), end=new Date(start.getTime()+CONFIG.endHours*3600000);
+  function utc(d){return d.toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";}
+
+  /* harita: iOS → Apple Haritalar, Android → yerel harita, masaüstü → Google Maps */
+  var gmaps="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(CONFIG.coords)+"&query_place_id="+CONFIG.placeId;
+  var href,text;
+  if(isIOS){ href="https://maps.apple.com/?ll="+CONFIG.coords+"&q="+label+"&address="+q; text="Haritalar'da aç"; }
+  else if(isAndroid){ href="geo:"+CONFIG.coords+"?q="+CONFIG.coords+"("+label+")"; text="Google Haritalar'da aç"; }
+  else { href=gmaps; text="Konumu haritada aç"; }
+  var mapLink=document.getElementById("mapLink"), mapBox=document.getElementById("mapBox");
+  mapLink.href=href; mapLink.textContent=text; mapBox.href=href;
+  if(!isIOS&&!isAndroid){ mapLink.target="_blank"; mapBox.target="_blank"; }
+
+  /* takvim */
+  var cal=document.getElementById("calBtn");
+  var gcal="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(CONFIG.title)
+    +"&dates="+utc(start)+"/"+utc(end)+"&location="+q+"&details="+encodeURIComponent(CONFIG.note);
+  cal.textContent=isAndroid?"Google Takvim'e ekle":"Takvime ekle";
+  function fold(l){var o="",i=0;while(l.length-i>74){o+=l.substr(i,74)+"\r\n ";i+=74;}return o+l.substr(i);}
+  function esc(s){return String(s).replace(/([,;\\])/g,"\\$1").replace(/\n/g,"\\n");}
+  function ics(){
+    return ["BEGIN:VCALENDAR","VERSION:2.0","CALSCALE:GREGORIAN","METHOD:PUBLISH","PRODID:-//Sena Murathan//Dugun//TR",
+      "BEGIN:VEVENT","UID:sena-murathan-30ekim2026@dugun.invite","DTSTAMP:"+utc(new Date()),
+      "DTSTART:"+utc(start),"DTEND:"+utc(end),fold("SUMMARY:"+esc(CONFIG.title)),
+      fold("LOCATION:"+esc(CONFIG.venue+", "+CONFIG.address)),fold("DESCRIPTION:"+esc(CONFIG.note)),
+      "GEO:"+CONFIG.coords.replace(",",";"),
+      "BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:"+esc(CONFIG.title),"END:VALARM",
+      "END:VEVENT","END:VCALENDAR"].join("\r\n");
+  }
+  var fb=document.getElementById("calFallback"), alt=document.getElementById("calAlt");
+  alt.href=gcal; alt.target="_blank";
+  cal.addEventListener("click",function(){
+    if(isAndroid){ window.open(gcal,"_blank","noopener"); return; }
+    var url=URL.createObjectURL(new Blob(["\ufeff"+ics()],{type:"text/calendar;charset=utf-8"}));
+    var a=document.createElement("a"); a.href=url; a.download="sena-murathan-dugun.ics"; a.rel="noopener";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){URL.revokeObjectURL(url);},4000); fb.classList.add("show");
+  });
+
+  /* okaliptüs dalları */
+  var ns="http://www.w3.org/2000/svg";
+  [].forEach.call(document.querySelectorAll(".vine"),function(svg,vi){
+    var path=svg.querySelector(".stem"), L=path.getTotalLength(), n=14;
+    var root=document.createElementNS(ns,"g");
+    root.setAttribute("class","vroot");
+    root.style.transformOrigin=(vi?"50px 0px":"36px 0px");   /* dalın dibinden sallansın */
+    svg.appendChild(root); root.appendChild(path);
+    path.style.setProperty("--L", L.toFixed(1));
+    for(var i=1;i<=n;i++){
+      var t=i/(n+1), p=path.getPointAtLength(t*L), p2=path.getPointAtLength(Math.min(L,t*L+2));
+      var ang=Math.atan2(p2.y-p.y,p2.x-p.x)*180/Math.PI, side=(i%2)?1:-1;
+      var rad=(ang+90*side)*Math.PI/180, off=14+(i%3)*2.5;
+      var cx=p.x+Math.cos(rad)*off, cy=p.y+Math.sin(rad)*off;
+      /* dış g: yaprağın dal üzerindeki açısı · iç g: açılışta büyüme · ellipse: rüzgârda salınım */
+      var g=document.createElementNS(ns,"g");
+      g.setAttribute("transform","rotate("+(ang+side*28).toFixed(1)+" "+cx.toFixed(1)+" "+cy.toFixed(1)+")");
+      var pop=document.createElementNS(ns,"g");
+      pop.setAttribute("class","pop");
+      pop.style.setProperty("--pd",(.3+i*.075+vi*.12).toFixed(2)+"s");
+      var e=document.createElementNS(ns,"ellipse");
+      e.setAttribute("cx",cx.toFixed(1)); e.setAttribute("cy",cy.toFixed(1));
+      e.setAttribute("rx",(13-(i%4)).toFixed(1)); e.setAttribute("ry",(8-(i%3)*.6).toFixed(1));
+      e.setAttribute("fill", i%5===0?"#C3CAB3":"#AEB59D");
+      e.setAttribute("class","leaf");
+      e.style.setProperty("--sd",(8+(i%5)*1.1).toFixed(1)+"s");
+      e.style.setProperty("--sl",(.3+i*.075+vi*.12+1.05+(i%4)*.35).toFixed(2)+"s");
+      pop.appendChild(e); g.appendChild(pop); root.appendChild(g);
+      if(i%4===1){
+        var dp=document.createElementNS(ns,"g"); dp.setAttribute("class","pop");
+        dp.style.setProperty("--pd",(.5+i*.075+vi*.12).toFixed(2)+"s");
+        var d=document.createElementNS(ns,"circle");
+        d.setAttribute("cx",(p.x-Math.cos(rad)*9).toFixed(1)); d.setAttribute("cy",(p.y-Math.sin(rad)*9).toFixed(1));
+        d.setAttribute("r","3.2"); d.setAttribute("fill","#D3C3A0"); d.setAttribute("class","dot");
+        d.style.setProperty("--sd",(7+(i%4)).toFixed(1)+"s");
+        d.style.setProperty("--sl",(1.55+i*.075+vi*.12).toFixed(2)+"s");
+        dp.appendChild(d); root.appendChild(dp);
+      }
+    }
+  });
+
+  /* ---------- dizgi: orijinalin punto ve genişlikleriyle ---------- */
+  var card=document.getElementById("card");
+  var ctx=document.createElement("canvas").getContext("2d");
+  function fontOf(el,size){var c=getComputedStyle(el);return c.fontStyle+" "+c.fontWeight+" "+size+"px "+c.fontFamily;}
+  function place(k,s,W){
+    var el=card.querySelector('[data-k="'+k+'"]'); if(!el) return;
+    var txt=el.textContent.replace(/\s+/g," ").trim(), probe=200;
+    ctx.font=fontOf(el,probe);
+    var F;
+    if(s.script){
+      /* el yazısı: harf aralığı verilemez (harfler birbirine bağlı), punto genişliğe göre bulunur */
+      var wp=ctx.measureText(txt).width||probe;
+      F=s.w*W/(wp/probe);
+      el.style.fontSize=F.toFixed(2)+"px"; el.style.letterSpacing="0px"; el.style.textIndent="0px";
+    } else {
+      var cm=ctx.measureText("H");
+      var ratio=(cm.actualBoundingBoxAscent||probe*.66)/probe;
+      F=s.cap*W/ratio;
+      el.style.fontSize=F.toFixed(2)+"px"; el.style.letterSpacing="0px"; el.style.textIndent="0px";
+      var nat=el.getBoundingClientRect().width, n=Math.max(txt.length,2);
+      var ls=(s.w*W-nat)/(n-1);
+      if(isFinite(ls)){ el.style.letterSpacing=ls.toFixed(3)+"px"; el.style.textIndent=ls.toFixed(3)+"px"; }
+    }
+    ctx.font=fontOf(el,F);
+    var m=ctx.measureText(s.script?txt:"H");
+    var fa=m.fontBoundingBoxAscent||F*.95, fd=m.fontBoundingBoxDescent||F*.32;
+    var baseTop=(F-(fa+fd))/2+fa;                 /* kutunun üstünden taban çizgisine olan mesafe */
+    if(s.base!=null) el.style.top=(s.base*W-baseTop).toFixed(2)+"px";
+    else el.style.top=(s.top*W-(baseTop-(m.actualBoundingBoxAscent||F*.66))).toFixed(2)+"px";
+    if(s.cx!=null){ el.style.left=(s.cx*100).toFixed(3)+"%"; el.classList.add("c"); }
+    else { el.style.left=(s.lx*100).toFixed(3)+"%"; el.classList.remove("c"); }
+  }
+  function typeset(){
+    var W=card.clientWidth; if(!W) return;
+    Object.keys(SPEC).forEach(function(k){ try{ place(k,SPEC[k],W); }catch(e){} });
+    try{
+      ["rule1","ruleL","ruleR"].forEach(function(k){
+        var b=BOX[k], el=card.querySelector('[data-k="'+k+'"]');
+        el.style.top=(b.y*W)+"px"; el.style.left=(b.x*100)+"%"; el.style.width=(b.w*100)+"%";
+      });
+      var mb=BOX.mapbox, D=mb.d*W;
+      mapBox.style.width=D.toFixed(2)+"px"; mapBox.style.height=D.toFixed(2)+"px";
+      mapBox.style.left=((mb.cx-mb.d/2)*100).toFixed(3)+"%";
+      mapBox.style.top=((mb.cy-mb.d/2)*W).toFixed(2)+"px";
+      var vb=BOX.vbar, vel=card.querySelector('[data-k="vbar"]');
+      vel.style.top=(vb.y*W)+"px"; vel.style.left=(vb.x*100)+"%"; vel.style.height=(vb.h*W)+"px";
+    }catch(e){}
+  }
+
+  /* geri sayım */
+  function tick(){
+    var el=document.getElementById("countdown"), diff=start-new Date();
+    if(diff<=0){ el.textContent="Bugün, saat 19.00'da birlikteyiz."; return; }
+    var dd=Math.floor(diff/86400000), hh=Math.floor(diff%86400000/3600000);
+    el.textContent=dd>0?"Düğüne "+dd+" gün "+hh+" saat kaldı":"Düğüne "+hh+" saat kaldı";
+  }
+  tick(); setInterval(tick,60000);
+
+  /* ---------- açılış ---------- */
+  var front=document.getElementById("coverFront"), back=document.getElementById("coverBack");
+  var envF=document.getElementById("envFront"), flapA=document.getElementById("flapA"), flapB=document.getElementById("flapB");
+  var bloom=document.getElementById("bloom"), petals=document.getElementById("petals");
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var inside="", peek="", opened=false;
+
+  function measure(){
+    if(opened) return;
+    card.style.transition="none"; card.style.transform="none";
+    var R=card.getBoundingClientRect(), E=envF.getBoundingClientRect();
+    var s=Math.min(.72*E.width/R.width, .80*E.height/R.height);   /* zarfın içine tam otursun */
+    var tx=(E.left+E.width/2)-(R.left+R.width/2);
+    var ty=(E.top+E.height*.58)-(R.top+R.height/2);
+    inside="translate("+tx.toFixed(1)+"px,"+ty.toFixed(1)+"px) rotate(-1.4deg) scale("+s.toFixed(4)+")";
+    peek  ="translate("+tx.toFixed(1)+"px,"+(ty-R.height*s*.45).toFixed(1)+"px) rotate(.7deg) scale("+s.toFixed(4)+")";
+    card.style.opacity="0"; card.classList.add("in-env"); card.style.transform=inside;
+    void card.offsetWidth;
+  }
+
+  function rain(){
+    if(reduce) return;
+    var ns="http://www.w3.org/2000/svg";
+    for(var i=0;i<14;i++){
+      var w=document.createElement("div"); w.className="petal";
+      w.style.left=(Math.random()*100).toFixed(1)+"vw";
+      w.style.setProperty("--dx",((Math.random()*160)-80).toFixed(0)+"px");
+      w.style.setProperty("--spin",((Math.random()*360)+120).toFixed(0)+"deg");
+      var size=(10+Math.random()*12).toFixed(0);
+      var svg=document.createElementNS(ns,"svg");
+      svg.setAttribute("width",size); svg.setAttribute("height",(size*.62).toFixed(0));
+      svg.setAttribute("viewBox","0 0 26 16");
+      var e=document.createElementNS(ns,"ellipse");
+      e.setAttribute("cx","13"); e.setAttribute("cy","8"); e.setAttribute("rx","12"); e.setAttribute("ry","6.5");
+      e.setAttribute("fill", i%4===0?"#D3C3A0":(i%3===0?"#C3CAB3":"#AEB59D"));
+      e.setAttribute("transform","rotate(-16 13 8)");
+      svg.appendChild(e); w.appendChild(svg);
+      w.style.animation="fall "+(7+Math.random()*5).toFixed(1)+"s linear "+(Math.random()*3.5).toFixed(1)+"s 1 forwards";
+      petals.appendChild(w);
+    }
+    setTimeout(function(){ if(petals.parentNode) petals.remove(); },17000);
+  }
+
+  function cleanup(){
+    if(front.parentNode) front.remove();
+    if(back.parentNode) back.remove();
+    if(bloom.parentNode) bloom.remove();
+  }
+  function finish(){
+    card.style.transition="none"; card.style.transform="none"; card.style.opacity="1";
+    card.classList.remove("in-env"); card.classList.add("landed");
+    document.body.classList.add("opened"); cleanup();
+  }
+
+  function open(){
+    if(opened) return; opened=true;
+    if(navigator.vibrate){ try{ navigator.vibrate([8,40,14]); }catch(e){} }
+    if(reduce){ finish(); return; }
+    front.classList.add("opening");
+    envF.classList.add("open");                                  /* mühür + kapak 1. aşama */
+
+    setTimeout(function(){                                       /* kapak dik konumda el değiştirir:
+                                                                    öndeki gizlenir, arkadaki devam eder */
+      flapA.classList.add("done");
+      flapB.classList.add("show");
+    }, 430);
+
+    setTimeout(function(){                                       /* davetiye zarfın içinde belirir */
+      card.style.transition="opacity .4s ease"; card.style.opacity="1";
+    }, 880);
+
+    setTimeout(function(){                                       /* hafif salınarak yukarı süzülür */
+      card.style.transition="transform 1.1s cubic-bezier(.32,.82,.28,1)";
+      card.style.transform=peek;
+    }, 1300);
+
+    setTimeout(function(){                                       /* zarf ve açık kapak birlikte silinir */
+      front.classList.add("gone"); back.classList.add("gone");
+      bloom.classList.add("on"); rain();
+      card.style.transition="transform 1.2s cubic-bezier(.2,.9,.26,1), box-shadow 1.2s ease";
+      card.classList.remove("in-env"); card.style.transform="none";
+      document.body.classList.add("opened");
+    }, 2300);
+
+    setTimeout(function(){
+      card.style.transition=""; card.classList.add("landed"); cleanup();
+    }, 3550);
+  }
+
+  function ready(){
+    if(document.body.classList.contains("ready")) return;
+    typeset(); measure(); document.body.classList.add("ready");
+  }
+  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(ready); setTimeout(ready,2500); }
+  else { window.addEventListener("load",ready); setTimeout(ready,1200); }
+
+  var rt;
+  window.addEventListener("resize",function(){
+    clearTimeout(rt); rt=setTimeout(function(){ typeset(); if(!opened) measure(); },180);
+  });
+  front.addEventListener("click",open);
+  envF.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); open(); } });
+})();
+</script>
+</body>
+</html>
