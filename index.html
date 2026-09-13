@@ -293,7 +293,7 @@
       <a id="mapLink" href="#" rel="noopener">Konumu aç</a>
       <button type="button" id="saveBtn">Davetiyeyi kaydet</button>
     </div>
-    <p class="cal-fallback" id="saveNote">İnmediyse <a href="davetiye.png" download>davetiyeye buradan ulaşın</a>.</p>
+    <p class="cal-fallback" id="saveNote">İnmediyse <a href="davetiye.jpg" download>davetiyeye buradan ulaşın</a>.</p>
   </section>
 </main>
 
@@ -375,15 +375,15 @@
     saveBtn.disabled=true;
     var eski=saveBtn.textContent; saveBtn.textContent="Hazırlanıyor...";
     try{
-      var res=await fetch("davetiye.png",{cache:"force-cache"});
+      var res=await fetch("davetiye.jpg",{cache:"force-cache"});
       if(!res.ok) throw new Error("yok");
       var blob=await res.blob();
-      var file=new File([blob],"sena-murathan-davetiye.png",{type:blob.type||"image/png"});
+      var file=new File([blob],"sena-murathan-davetiye.jpg",{type:blob.type||"image/png"});
       if(navigator.canShare && navigator.canShare({files:[file]})){
         await navigator.share({files:[file], title:"Sena & Murathan"});
       } else {
         var u=URL.createObjectURL(blob);
-        var a=document.createElement("a"); a.href=u; a.download="sena-murathan-davetiye.png";
+        var a=document.createElement("a"); a.href=u; a.download="sena-murathan-davetiye.jpg";
         document.body.appendChild(a); a.click(); a.remove();
         setTimeout(function(){ URL.revokeObjectURL(u); },4000);
         saveNote.classList.add("show");
