@@ -453,8 +453,14 @@
       F=s.cap*W/ratio;
       el.style.fontSize=F.toFixed(2)+"px"; el.style.letterSpacing="0px"; el.style.textIndent="0px";
       var nat=el.getBoundingClientRect().width, n=Math.max(txt.length,2);
-      var ls=(s.w*W-nat)/(n-1);
-      if(isFinite(ls)){ el.style.letterSpacing=ls.toFixed(3)+"px"; el.style.textIndent=ls.toFixed(3)+"px"; }
+      var target=s.w*W, ls=(target-nat)/(n-1);
+      function setLs(v){ v=Math.max(-.05*F,Math.min(.6*F,v)); el.style.letterSpacing=v.toFixed(3)+"px"; el.style.textIndent=v.toFixed(3)+"px"; return v; }
+      if(isFinite(ls)){
+        ls=setLs(ls);
+        /* kontrol ölçümü: mürekkep genişliği = kutu − baştaki girinti − sondaki aralık */
+        var ink=el.getBoundingClientRect().width-2*ls;
+        if(isFinite(ink)&&Math.abs(ink-target)>.5) setLs(ls+(target-ink)/(n-1));
+      }
     }
     ctx.font=fontOf(el,F);
     var m=ctx.measureText(s.script?txt:"H");
@@ -467,7 +473,13 @@
   }
   function typeset(){
     var W=card.clientWidth; if(!W) return;
+    /* kart zarfın içindeyken küçültülmüş/döndürülmüş durur; getBoundingClientRect o hâli ölçer.
+       Android adres çubuğu yüzünden resize tetikleyince harf aralıkları ~2.5 kat çıkıyordu.
+       Ölçüm süresince dönüşümü kaldırıp sonra geri koyuyoruz. */
+    var prevT=card.style.transform, prevTr=card.style.transition;
+    card.style.transition="none"; card.style.transform="none";
     Object.keys(SPEC).forEach(function(k){ try{ place(k,SPEC[k],W); }catch(e){} });
+    card.style.transform=prevT; void card.offsetWidth; card.style.transition=prevTr;
     try{
       ["rule1","ruleL","ruleR"].forEach(function(k){
         var b=BOX[k], el=card.querySelector('[data-k="'+k+'"]');
@@ -584,8 +596,21 @@
     if(document.body.classList.contains("ready")) return;
     typeset(); measure(); document.body.classList.add("ready");
   }
-  if(document.fonts&&document.fonts.ready){ document.fonts.ready.then(ready); setTimeout(ready,2500); }
-  else { window.addEventListener("load",ready); setTimeout(ready,1200); }
+  /* Google Fonts Türkçe harfleri (İ Ü Ö Ç Ş Ğ) ayrı bir dosyadan verir; Android Chrome bu
+     dosya gelmeden fonts.ready'i çözebiliyor ve harf aralıkları yanlış ölçülüyordu.
+     Bu yüzden fontları kartın gerçek metniyle açıkça yükletip öyle diziyoruz,
+     sonradan gelen her font dosyasında da yeniden diziyoruz. */
+  var allText=card.textContent.replace(/\s+/g," ")+" ÇĞİÖŞÜçğıöşü";
+  var faces=['300 40px "Cormorant Garamond"','400 40px "Cormorant Garamond"','400 40px "Pinyon Script"'];
+  var rt2;
+  function retype(){ clearTimeout(rt2); rt2=setTimeout(function(){ typeset(); if(!opened) measure(); },60); }
+  if(document.fonts&&document.fonts.load){
+    Promise.all(faces.map(function(f){ return document.fonts.load(f,allText).catch(function(){}); }))
+      .then(function(){ return document.fonts.ready; }).then(ready,ready);
+    setTimeout(ready,3500);
+    if(document.fonts.addEventListener) document.fonts.addEventListener("loadingdone",function(){ if(document.body.classList.contains("ready")) retype(); });
+    window.addEventListener("load",function(){ if(document.body.classList.contains("ready")) retype(); });
+  } else { window.addEventListener("load",ready); setTimeout(ready,1200); }
 
   var rt;
   window.addEventListener("resize",function(){
