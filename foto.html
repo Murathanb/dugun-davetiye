@@ -310,11 +310,18 @@ window.FOTO_AYAR = {
       });
     });
   }
+  // Yeni yüklenenler sunucu listesine ~1 dk geç düşer; o arada yükleyenin cihazında göstermek için
+  // kısa süre hatırlanır. 10 dakikadan eskiler unutulur, böylece silinen fotoğraflar geri gelmez.
+  var LOCAL_TTL = 10 * 60 * 1000;
   function localItems(){
-    try{ return JSON.parse(store(localKey)||"[]"); }catch(e){ return []; }
+    var l; try{ l = JSON.parse(store(localKey)||"[]"); }catch(e){ l = []; }
+    var now = Date.now(), fresh = l.filter(function(x){ return x.savedAt && now - x.savedAt < LOCAL_TTL; });
+    if(fresh.length !== l.length) store(localKey, JSON.stringify(fresh));
+    return fresh;
   }
   function rememberLocal(it){
     var l = localItems().filter(function(x){ return x.public_id !== it.public_id; });
+    it.savedAt = Date.now();
     l.unshift(it); store(localKey, JSON.stringify(l.slice(0,200)));
   }
   var loading = false;
