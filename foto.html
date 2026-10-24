@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sena &amp; Murathan · Anılarımız</title>
+<meta name="description" content="Sena ve Murathan'ın düğününde çektiğiniz fotoğrafları paylaşın, diğerlerinin çektiklerini indirin.">
+<meta property="og:title" content="Sena &amp; Murathan — Anılarımız">
+<meta property="og:description" content="Düğünde çektiğiniz fotoğraf ve videoları buraya yükleyin, herkesinkini görün.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://murathanb.github.io/dugun-davetiye/foto.html">
+<meta property="og:image" content="https://murathanb.github.io/dugun-davetiye/davetiye-onizleme.jpg?v=2">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FBF6F0">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23FBF6F0'/><ellipse cx='12' cy='16' rx='8' ry='4.6' fill='%23AEB59D' transform='rotate(-22 12 16)'/><ellipse cx='21' cy='16' rx='8' ry='4.6' fill='%23C3CAB3' transform='rotate(22 21 16)'/><circle cx='16.5' cy='16' r='2' fill='%23B08D4F'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<script>
+/* ▼▼▼ AYARLAR — Cloudinary hesabını açınca sadece CLOUD_NAME'i değiştir ▼▼▼ */
+window.FOTO_AYAR = {
+  CLOUD_NAME: "kduu6apu", // Cloudinary panelinde "Cloud name" (örn. dxk3abc12)
+  PRESET:     "dugun_foto",        // Unsigned upload preset adı
+  TAG:        "dugun"              // Tüm yüklemelere eklenen etiket (galeri bununla listelenir)
+};
+/* ▲▲▲ ------------------------------------------------------------------ ▲▲▲ */
+</script>
+<style>
+  :root{
+    --paper:#FBF6F0; --paper-warm:#F4EFE6;
+    --ink:#2A3026; --ink-soft:#54564C;
+    --sage:#AEB59D; --sage-light:#C3CAB3; --sage-deep:#8E9A7C;
+    --gold:#9A8E6C; --gold-pale:#BFB6A0; --rule:#B5B4AA;
+    --err:#9C4A3C;
+  }
+  *{box-sizing:border-box;}
+  [hidden]{display:none!important;}
+  html{-webkit-text-size-adjust:100%; background:var(--paper-warm);}
+  body{
+    margin:0; min-height:100svh;
+    background:radial-gradient(120% 70% at 50% 0%, #FDFAF6 0%, var(--paper) 45%, var(--paper-warm) 100%) fixed;
+    color:var(--ink); font-family:"Cormorant Garamond",Garamond,"Times New Roman",serif;
+    font-weight:400; font-size:17px; -webkit-font-smoothing:antialiased;
+  }
+  .grain{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.35; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.3'/></svg>");}
+  .wrap{position:relative; z-index:1; width:min(100%,760px); margin:0 auto;
+    padding:calc(2.2rem + env(safe-area-inset-top)) 16px calc(6rem + env(safe-area-inset-bottom));}
+
+  /* başlık */
+  header{text-align:center;}
+  .leaf{display:block; margin:0 auto .4rem; width:58px; height:24px;}
+  .script{font-family:"Pinyon Script",cursive; font-weight:400;}
+  .kicker{font-size:clamp(2.3rem,10vw,3.1rem); color:var(--gold); line-height:1.1; margin:0;}
+  .names{margin:.55rem 0 0; font-weight:300; font-size:clamp(1.25rem,5.4vw,1.6rem); letter-spacing:.2em; text-indent:.2em;}
+  .names em{font-style:normal; font-size:.6em; letter-spacing:.4em; color:var(--gold); padding:0 .25em;}
+  .date{margin:.35rem 0 0; font-size:.82rem; letter-spacing:.32em; text-indent:.32em; color:var(--ink-soft);}
+  .rule{display:block; width:90px; height:1px; margin:1.3rem auto; background:linear-gradient(90deg,transparent,var(--rule),transparent);}
+  .lead{max-width:30em; margin:0 auto; text-align:center; font-size:1.08rem; line-height:1.5; color:var(--ink-soft);}
+
+  /* yükleme kartı */
+  .panel{margin:1.6rem auto 0; max-width:480px; background:rgba(255,255,255,.55);
+    border:1px solid rgba(191,182,160,.7); border-radius:4px; padding:1.3rem 1.1rem 1.2rem;
+    box-shadow:0 12px 30px -22px rgba(74,66,48,.45);}
+  label.name{display:block; font-size:.78rem; letter-spacing:.22em; color:var(--ink-soft); margin-bottom:.45rem;}
+  input[type=text]{width:100%; font:inherit; font-size:1.05rem; color:var(--ink); background:#fff;
+    border:1px solid var(--gold-pale); border-radius:3px; padding:.7rem .8rem; outline:none;}
+  input[type=text]:focus{border-color:var(--sage-deep); box-shadow:0 0 0 3px rgba(174,181,157,.3);}
+  .btn{display:flex; align-items:center; justify-content:center; gap:.6rem; width:100%;
+    font:inherit; font-size:1.05rem; letter-spacing:.14em; cursor:pointer; border-radius:3px;
+    padding:.95rem 1rem; border:1px solid var(--ink); background:var(--ink); color:var(--paper);
+    transition:background .3s ease, transform .15s ease;}
+  .btn:active{transform:scale(.985);}
+  .btn svg{width:22px; height:22px; flex:none;}
+  .btn.ghost{background:transparent; color:var(--ink); border-color:var(--gold-pale);}
+  .btn.ghost:hover{background:rgba(255,255,255,.7);}
+  .btn.small{width:auto; padding:.55rem .95rem; font-size:.88rem; letter-spacing:.1em;}
+  .btn[disabled]{opacity:.45; cursor:default;}
+  .panel .btn{margin-top:1rem;}
+  .fine{margin:.8rem 0 0; text-align:center; font-size:.9rem; color:var(--ink-soft); line-height:1.45;}
+  #filein{position:absolute; width:1px; height:1px; opacity:0; pointer-events:none;}
+
+  /* kuyruk */
+  .queue{list-style:none; margin:1rem 0 0; padding:0; display:grid; gap:.5rem;}
+  .queue:empty{display:none;}
+  .q{display:grid; grid-template-columns:44px 1fr auto; align-items:center; gap:.7rem;
+    background:#fff; border:1px solid rgba(191,182,160,.55); border-radius:3px; padding:.45rem .6rem .45rem .45rem;}
+  .q .th{width:44px; height:44px; border-radius:2px; background:var(--paper-warm) center/cover no-repeat;}
+  .q .meta{min-width:0;}
+  .q .nm{font-size:.95rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .q .st{font-size:.82rem; color:var(--ink-soft); margin-top:.1rem;}
+  .q .bar{height:3px; background:var(--paper-warm); border-radius:2px; margin-top:.35rem; overflow:hidden;}
+  .q .bar i{display:block; height:100%; width:0; background:var(--sage-deep); transition:width .25s ease;}
+  .q.done .bar i{background:var(--sage);}
+  .q.fail .st{color:var(--err);}
+  .q.fail .bar i{background:var(--err);}
+  .q .act{font:inherit; font-size:.85rem; border:1px solid var(--gold-pale); background:transparent; color:var(--ink);
+    border-radius:3px; padding:.35rem .6rem; cursor:pointer;}
+  .q .ok{color:var(--sage-deep); width:22px; height:22px;}
+  .summary{margin:.7rem 0 0; text-align:center; font-size:.95rem; color:var(--sage-deep);}
+  .summary:empty{display:none;}
+
+  /* galeri */
+  .gal-head{display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; margin:2.6rem 0 .9rem;}
+  .gal-head h2{margin:0; font-weight:400; font-size:1.05rem; letter-spacing:.24em;}
+  .gal-head h2 small{display:block; margin-top:.2rem; font-size:.8rem; letter-spacing:.12em; color:var(--ink-soft);}
+  .gal-tools{display:flex; gap:.45rem;}
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:4px;}
+  @media (min-width:600px){.grid{grid-template-columns:repeat(4,1fr); gap:6px;}}
+  .cell{position:relative; aspect-ratio:1; border:0; padding:0; margin:0; cursor:pointer; overflow:hidden;
+    background:var(--paper-warm); border-radius:2px;}
+  .cell img{position:relative; z-index:1; width:100%; height:100%; object-fit:cover; display:block; opacity:0; transition:opacity .5s ease;}
+  .cell img.ld{opacity:1;}
+  .cell .vid{position:absolute; right:6px; bottom:6px; width:26px; height:26px; border-radius:50%;
+    background:rgba(42,48,38,.62); display:grid; place-items:center;}
+  .cell .vid svg{width:11px; height:11px; margin-left:2px;}
+  .cell .ph{position:absolute; inset:0; display:grid; place-items:center; color:var(--gold-pale);}
+  .cell .ph svg{width:34px; height:34px;}
+  .cell .tick{position:absolute; top:6px; left:6px; width:24px; height:24px; border-radius:50%;
+    border:1.5px solid #fff; background:rgba(0,0,0,.18); display:none; place-items:center;}
+  .selecting .cell .tick{display:grid;}
+  .cell.sel .tick{background:var(--sage-deep); border-color:#fff;}
+  .cell.sel img{transform:scale(.9); transition:transform .2s ease;}
+  .cell .tick svg{width:13px; height:13px; opacity:0;}
+  .cell.sel .tick svg{opacity:1;}
+  .empty{text-align:center; padding:2.4rem 1rem; color:var(--ink-soft); font-size:1.05rem; line-height:1.5;
+    border:1px dashed var(--gold-pale); border-radius:4px;}
+  .empty .script{display:block; font-size:2rem; color:var(--gold); margin-bottom:.3rem;}
+  .more{margin:1rem auto 0; display:block;}
+
+  /* seçim çubuğu */
+  .selbar{position:fixed; left:0; right:0; bottom:0; z-index:20; display:none;
+    padding:.7rem 16px calc(.7rem + env(safe-area-inset-bottom));
+    background:rgba(251,246,240,.96); border-top:1px solid var(--gold-pale); backdrop-filter:blur(8px);}
+  .selecting .selbar{display:block;}
+  .selbar .in{width:min(100%,760px); margin:0 auto; display:flex; align-items:center; gap:.6rem;}
+  .selbar .count{flex:1; font-size:.95rem; letter-spacing:.06em;}
+  .selbar .btn{width:auto;}
+
+  /* büyük görüntü */
+  .lb{position:fixed; inset:0; z-index:50; background:rgba(20,22,18,.96); display:none; flex-direction:column; color:#F4EFE6;}
+  .lb.open{display:flex;}
+  .lb-top{display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    padding:calc(.6rem + env(safe-area-inset-top)) 12px .6rem;}
+  .lb-info{font-size:.95rem; letter-spacing:.05em; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; opacity:.85;}
+  .ic{width:44px; height:44px; flex:none; border:0; background:transparent; color:inherit; cursor:pointer;
+    display:grid; place-items:center; border-radius:50%;}
+  .ic svg{width:24px; height:24px;}
+  .ic:hover{background:rgba(255,255,255,.08);}
+  .lb-stage{flex:1; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; touch-action:pan-y;}
+  .lb-stage img,.lb-stage video{max-width:100%; max-height:100%; object-fit:contain; display:block; user-select:none; -webkit-user-drag:none;}
+  .lb-nav{position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.3);}
+  .lb-prev{left:8px;} .lb-next{right:8px;}
+  @media (hover:none){.lb-nav{display:none;}}
+  .lb-bottom{display:flex; justify-content:center; padding:.7rem 16px calc(1rem + env(safe-area-inset-bottom));}
+  .lb-bottom .btn{width:auto; min-width:200px; background:#F4EFE6; color:var(--ink); border-color:#F4EFE6;}
+  .spin{width:30px; height:30px; border:2px solid rgba(255,255,255,.2); border-top-color:#F4EFE6; border-radius:50%;
+    animation:sp 0.9s linear infinite; position:absolute;}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  .toast{position:fixed; left:50%; bottom:calc(1.4rem + env(safe-area-inset-bottom)); z-index:60;
+    transform:translate(-50%,20px); opacity:0; pointer-events:none; transition:all .35s ease;
+    background:var(--ink); color:var(--paper); padding:.7rem 1.1rem; border-radius:3px; font-size:.95rem;
+    max-width:calc(100% - 32px); text-align:center;}
+  .toast.show{opacity:1; transform:translate(-50%,0);}
+  .setup{margin:1.2rem auto 0; max-width:480px; padding:.9rem 1rem; border:1px solid var(--err); color:var(--err);
+    border-radius:3px; font-size:.95rem; background:rgba(255,255,255,.6); display:none;}
+  .setup.show{display:block;}
+  :focus-visible{outline:2px solid var(--sage-deep); outline-offset:3px;}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="wrap" id="app">
+  <header>
+    <svg class="leaf" viewBox="0 0 58 24" fill="none" aria-hidden="true">
+      <path d="M2 12h20M36 12h20" stroke="#B5B4AA" stroke-width=".8"/>
+      <ellipse cx="25.5" cy="12" rx="6.5" ry="3.4" fill="#AEB59D" transform="rotate(-24 25.5 12)"/>
+      <ellipse cx="32.5" cy="12" rx="6.5" ry="3.4" fill="#C3CAB3" transform="rotate(24 32.5 12)"/>
+      <circle cx="29" cy="12" r="1.6" fill="#9A8E6C"/>
+    </svg>
+    <p class="kicker script">Anılarımız</p>
+    <h1 class="names">SENA<em>VE</em>MURATHAN</h1>
+    <p class="date">30 · EKİM · 2026</p>
+    <span class="rule" aria-hidden="true"></span>
+    <p class="lead">Bu geceden çektiğiniz fotoğraf ve videoları buraya ekleyin; herkesin çektiklerini aşağıda görüp telefonunuza kaydedebilirsiniz.</p>
+  </header>
+
+  <div class="setup" id="setupNote">Sayfa henüz bağlanmadı: <code>foto.html</code> içindeki <b>CLOUD_NAME</b> ayarını doldurun.</div>
+
+  <section class="panel" aria-label="Fotoğraf yükle">
+    <label class="name" for="guest">ADINIZ <span style="letter-spacing:.06em">(isteğe bağlı)</span></label>
+    <input type="text" id="guest" maxlength="40" autocomplete="name" placeholder="Örn. Ayşe Teyze">
+    <input type="file" id="filein" accept="image/*,video/*" multiple>
+    <button class="btn" type="button" id="pick">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.7l1.3-2h5l1.3 2h1.7A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.4" r="3.4"/></svg>
+      FOTOĞRAF / VİDEO EKLE
+    </button>
+    <p class="fine">Birden fazla seçebilirsiniz. Çekim zayıfsa sorun değil, eve dönünce de yükleyebilirsiniz.</p>
+    <ul class="queue" id="queue"></ul>
+    <p class="summary" id="summary"></p>
+  </section>
+
+  <section aria-label="Galeri">
+    <div class="gal-head">
+      <h2>GALERİ <small id="galCount"></small></h2>
+      <div class="gal-tools">
+        <button class="btn ghost small" type="button" id="refresh" aria-label="Galeriyi yenile">Yenile</button>
+        <button class="btn ghost small" type="button" id="selToggle">Seç</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" hidden><span class="script">İlk kare sizden</span>Henüz fotoğraf yok. Yukarıdan ilk fotoğrafı siz ekleyin.</div>
+    <button class="btn ghost small more" type="button" id="more" hidden>Daha fazla göster</button>
+  </section>
+</div>
+
+<div class="selbar" id="selbar">
+  <div class="in">
+    <span class="count" id="selCount">0 seçildi</span>
+    <button class="btn ghost small" type="button" id="selCancel">Vazgeç</button>
+    <button class="btn small" type="button" id="selSave" disabled>Kaydet</button>
+  </div>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Fotoğraf">
+  <div class="lb-top">
+    <button class="ic" type="button" id="lbClose" aria-label="Kapat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="lb-info" id="lbInfo"></div>
+    <span style="width:44px"></span>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <button class="ic lb-nav lb-prev" type="button" id="lbPrev" aria-label="Önceki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="ic lb-nav lb-next" type="button" id="lbNext" aria-label="Sonraki"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5l7 7-7 7"/></svg></button>
+  </div>
+  <div class="lb-bottom">
+    <button class="btn" type="button" id="lbSave">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>
+      TELEFONUMA KAYDET
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+  var C = window.FOTO_AYAR;
+  var CLOUD = (C.CLOUD_NAME||"").trim();
+  var CONFIGURED = CLOUD && CLOUD.indexOf("BURAYA") !== 0;
+  var API = "https://api.cloudinary.com/v1_1/" + CLOUD + "/auto/upload";
+  var RES = "https://res.cloudinary.com/" + CLOUD;
+  var MAX_IMG = 10 * 1024 * 1024, MAX_VID = 100 * 1024 * 1024;
+  var PAGE = 60;
+
+  var $ = function(id){ return document.getElementById(id); };
+  var app=$("app"), grid=$("grid"), queueEl=$("queue"), guest=$("guest"), filein=$("filein");
+  var items=[], shown=PAGE, selecting=false, selected=new Set(), lbIndex=-1;
+  var localKey = "foto-yuklenen";
+
+  if(!CONFIGURED) $("setupNote").classList.add("show");
+
+  // ---------- yardımcılar ----------
+  var tT;
+  function toast(msg, ms){ var t=$("toast"); t.textContent=msg; t.classList.add("show");
+    clearTimeout(tT); tT=setTimeout(function(){ t.classList.remove("show"); }, ms||2600); }
+  function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; } }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function fmtMB(b){ return (b/1048576).toFixed(b<10485760?1:0)+" MB"; }
+  var sleep = function(ms){ return new Promise(function(r){ setTimeout(r,ms); }); };
+
+  var savedName = store("foto-ad"); if(savedName) guest.value = savedName;
+  guest.addEventListener("change", function(){ store("foto-ad", guest.value.trim()); });
+
+  function urls(it){
+    var base = it.version ? "v"+it.version+"/" : "";
+    var p = encodeURI(it.public_id);
+    if(it.kind === "video"){
+      return {
+        thumb: RES+"/video/upload/so_0,c_fill,w_480,h_480,q_auto,f_jpg/"+base+p+".jpg",
+        big:   RES+"/video/upload/"+base+p+"."+(it.format||"mp4"),
+        save:  RES+"/video/upload/"+base+p+"."+(it.format||"mp4"),
+        name:  "sena-murathan-"+it.public_id.split("/").pop()+"."+(it.format||"mp4")
+      };
+    }
+    var keepFmt = /^(jpe?g|png|webp)$/i.test(it.format||"");
+    return {
+      thumb: RES+"/image/upload/c_fill,g_auto,w_480,h_480,q_auto,f_auto/"+base+p+"."+(it.format||"jpg"),
+      big:   RES+"/image/upload/c_limit,w_2000,h_2000,q_auto,f_auto/"+base+p+"."+(it.format||"jpg"),
+      // HEIC gibi formatlar her telefonda açılsın diye JPG olarak kaydedilir
+      save:  keepFmt ? RES+"/image/upload/"+base+p+"."+it.format : RES+"/image/upload/q_95/"+base+p+".jpg",
+      name:  "sena-murathan-"+it.public_id.split("/").pop()+"."+(keepFmt?it.format:"jpg")
+    };
+  }
+
+  // ---------- galeri ----------
+  function fetchList(kind){
+    var u = RES+"/"+kind+"/list/"+encodeURIComponent(C.TAG)+".json?t="+Date.now();
+    return fetch(u, {cache:"no-store"}).then(function(r){
+      if(r.status === 404) return [];
+      if(!r.ok) throw new Error("list "+r.status);
+      return r.json().then(function(j){
+        return (j.resources||[]).map(function(x){
+          var g = x.context && x.context.custom && x.context.custom.guest;
+          return {kind:kind, public_id:x.public_id, version:x.version, format:x.format,
+                  created_at:x.created_at, guest:g||""};
+        });
+      });
+    });
+  }
+  function localItems(){
+    try{ return JSON.parse(store(localKey)||"[]"); }catch(e){ return []; }
+  }
+  function rememberLocal(it){
+    var l = localItems().filter(function(x){ return x.public_id !== it.public_id; });
+    l.unshift(it); store(localKey, JSON.stringify(l.slice(0,200)));
+  }
+  var loading = false;
+  function loadGallery(silent){
+    if(!CONFIGURED){ render(); return Promise.resolve(); }
+    if(loading) return Promise.resolve(); loading = true;
+    return Promise.all([fetchList("image"), fetchList("video").catch(function(){ return []; })])
+      .then(function(res){
+        var all = res[0].concat(res[1]);
+        var ids = new Set(all.map(function(x){ return x.public_id; }));
+        // yeni yüklenenler listede henüz görünmüyorsa (önbellek) kendi cihazında yine göster
+        localItems().forEach(function(x){ if(!ids.has(x.public_id)) all.push(x); });
+        all.sort(function(a,b){ return (b.created_at||"").localeCompare(a.created_at||""); });
+        items = all; render();
+      })
+      .catch(function(e){
+        console.warn(e);
+        if(!items.length){ items = localItems(); render(); }
+        if(!silent) toast("Galeri yüklenemedi, internet bağlantınızı kontrol edin.");
+      })
+      .then(function(){ loading = false; });
+  }
+
+  var PLAY = '<svg viewBox="0 0 10 12" fill="#fff"><path d="M0 0l10 6-10 6z"/></svg>';
+  var TICK = '<svg viewBox="0 0 14 14" fill="none" stroke="#fff" stroke-width="2"><path d="M2.5 7.5l3 3 6-7"/></svg>';
+  var PH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.7l1.3-2h5l1.3 2h1.7A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.4" r="3.4"/></svg>';
+
+  function render(){
+    var n = items.length;
+    $("galCount").textContent = n ? n+" anı" : "";
+    $("empty").hidden = n > 0;
+    $("more").hidden = n <= shown;
+    $("selToggle").hidden = n === 0;
+    var html = "";
+    items.slice(0, shown).forEach(function(it, i){
+      var u = urls(it);
+      html += '<button type="button" class="cell'+(selected.has(it.public_id)?" sel":"")+'" data-i="'+i+'" aria-label="'+(it.kind==="video"?"Video":"Fotoğraf")+(it.guest?" — "+esc(it.guest):"")+'">'+
+        '<span class="ph">'+PH+'</span>'+
+        '<img loading="lazy" decoding="async" alt="" src="'+u.thumb+'" onload="this.classList.add(\'ld\')" onerror="this.remove()">'+
+        (it.kind==="video" ? '<span class="vid">'+PLAY+'</span>' : '')+
+        '<span class="tick">'+TICK+'</span></button>';
+    });
+    grid.innerHTML = html;
+  }
+
+  grid.addEventListener("click", function(e){
+    var c = e.target.closest(".cell"); if(!c) return;
+    var i = +c.dataset.i, it = items[i];
+    if(selecting){
+      if(selected.has(it.public_id)) selected.delete(it.public_id); else selected.add(it.public_id);
+      c.classList.toggle("sel"); updateSel(); return;
+    }
+    openLb(i);
+  });
+  $("more").addEventListener("click", function(){ shown += PAGE; render(); });
+  $("refresh").addEventListener("click", function(){ loadGallery().then(function(){ toast("Galeri güncellendi"); }); });
+
+  // otomatik yenile (sayfa açıkken dakikada bir)
+  setInterval(function(){ if(!document.hidden && !selecting && lbIndex<0) loadGallery(true); }, 60000);
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden) loadGallery(true); });
+
+  // ---------- seçim ----------
+  function setSelecting(on){
+    selecting = on; app.classList.toggle("selecting", on); document.body.classList.toggle("selecting", on);
+    $("selToggle").textContent = on ? "Bitti" : "Seç";
+    if(!on){ selected.clear(); grid.querySelectorAll(".cell.sel").forEach(function(c){ c.classList.remove("sel"); }); }
+    updateSel();
+  }
+  function updateSel(){
+    $("selCount").textContent = selected.size + " seçildi";
+    $("selSave").disabled = selected.size === 0;
+  }
+  $("selToggle").addEventListener("click", function(){ setSelecting(!selecting); });
+  $("selCancel").addEventListener("click", function(){ setSelecting(false); });
+  $("selSave").addEventListener("click", function(){
+    var list = items.filter(function(it){ return selected.has(it.public_id); });
+    saveItems(list).then(function(ok){ if(ok) setSelecting(false); });
+  });
+
+  // ---------- kaydetme ----------
+  function blobOf(it){
+    var u = urls(it);
+    return fetch(u.save).then(function(r){ if(!r.ok) throw new Error(r.status); return r.blob(); })
+      .then(function(b){ return new File([b], u.name, {type: b.type || (it.kind==="video"?"video/mp4":"image/jpeg")}); });
+  }
+  function downloadFile(f){
+    var a = document.createElement("a"), u = URL.createObjectURL(f);
+    a.href = u; a.download = f.name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(u); }, 30000);
+  }
+  var saving = false;
+  function saveItems(list){
+    if(saving || !list.length) return Promise.resolve(false);
+    saving = true;
+    toast(list.length > 1 ? list.length+" dosya hazırlanıyor…" : "Hazırlanıyor…", 60000);
+    var files = [], i = 0;
+    function next(){
+      if(i >= list.length) return Promise.resolve();
+      var it = list[i++];
+      return blobOf(it).then(function(f){ files.push(f); }).catch(function(){}).then(next);
+    }
+    return Promise.all([next(), next(), next()]).then(function(){
+      if(!files.length){ toast("Kaydedilemedi, tekrar deneyin."); return false; }
+      var canShare = navigator.canShare && navigator.share && navigator.canShare({files:files});
+      var mobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ||
+                   (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      if(canShare && mobile){
+        $("toast").classList.remove("show");
+        return navigator.share({files:files}).then(function(){ return true; })
+          .catch(function(e){ if(e && e.name === "AbortError") return false; files.forEach(downloadFile); return true; });
+      }
+      files.forEach(downloadFile);
+      toast(files.length > 1 ? files.length+" dosya indirildi" : "İndirildi");
+      return true;
+    }).then(function(r){ saving = false; return r; }, function(){ saving = false; return false; });
+  }
+
+  // ---------- büyük görüntü ----------
+  var lb=$("lb"), stage=$("lbStage");
+  function openLb(i){
+    lbIndex = i; lb.classList.add("open"); document.body.style.overflow = "hidden"; showLb();
+    history.pushState({lb:1}, "");
+  }
+  function closeLb(fromPop){
+    if(lbIndex < 0) return;
+    lbIndex = -1; lb.classList.remove("open"); document.body.style.overflow = "";
+    stage.querySelectorAll("img,video,.spin").forEach(function(n){ n.remove(); });
+    if(!fromPop && history.state && history.state.lb) history.back();
+  }
+  function showLb(){
+    var it = items[lbIndex]; if(!it) return;
+    var u = urls(it);
+    stage.querySelectorAll("img,video,.spin").forEach(function(n){ n.remove(); });
+    var sp = document.createElement("div"); sp.className = "spin"; stage.prepend(sp);
+    var el;
+    if(it.kind === "video"){
+      el = document.createElement("video"); el.controls = true; el.playsInline = true; el.preload = "metadata";
+      el.poster = u.thumb; el.src = u.big;
+      el.addEventListener("loadedmetadata", function(){ sp.remove(); });
+      el.addEventListener("error", function(){ sp.remove(); });
+      setTimeout(function(){ sp.remove(); }, 2500);
+    } else {
+      el = document.createElement("img"); el.alt = ""; el.src = u.big;
+      el.onload = el.onerror = function(){ sp.remove(); };
+    }
+    stage.prepend(el);
+    $("lbInfo").textContent = (it.guest ? "📷 "+it.guest+"  ·  " : "") + (lbIndex+1)+" / "+items.length;
+    $("lbPrev").style.visibility = lbIndex > 0 ? "visible" : "hidden";
+    $("lbNext").style.visibility = lbIndex < items.length-1 ? "visible" : "hidden";
+    // komşu fotoğrafı önceden yükle
+    var nx = items[lbIndex+1]; if(nx && nx.kind === "image"){ var pre = new Image(); pre.src = urls(nx).big; }
+  }
+  function step(d){ var n = lbIndex + d; if(n < 0 || n >= items.length) return; lbIndex = n; showLb(); }
+  $("lbClose").addEventListener("click", function(){ closeLb(); });
+  $("lbPrev").addEventListener("click", function(){ step(-1); });
+  $("lbNext").addEventListener("click", function(){ step(1); });
+  $("lbSave").addEventListener("click", function(){ saveItems([items[lbIndex]]); });
+  window.addEventListener("popstate", function(){ closeLb(true); });
+  document.addEventListener("keydown", function(e){
+    if(lbIndex < 0) return;
+    if(e.key === "Escape") closeLb(); else if(e.key === "ArrowLeft") step(-1); else if(e.key === "ArrowRight") step(1);
+  });
+  var sx=0, sy=0;
+  stage.addEventListener("touchstart", function(e){ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive:true});
+  stage.addEventListener("touchend", function(e){
+    var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if(Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)*1.3) step(dx < 0 ? 1 : -1);
+    else if(dy > 90 && Math.abs(dy) > Math.abs(dx)*1.3) closeLb();
+  }, {passive:true});
+
+  // ---------- yükleme ----------
+  $("pick").addEventListener("click", function(){
+    if(!CONFIGURED){ toast("Sayfa henüz bağlanmadı."); return; }
+    filein.click();
+  });
+  filein.addEventListener("change", function(){
+    var fs = Array.prototype.slice.call(filein.files||[]); filein.value = "";
+    if(guest.value.trim()) store("foto-ad", guest.value.trim());
+    fs.forEach(enqueue); pump();
+  });
+
+  var jobs = [], active = 0, CONC = 2, okCount = 0;
+  var IC_OK = '<svg class="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+  function enqueue(file){
+    var isVid = /^video\//.test(file.type) || /\.(mov|mp4|m4v|3gp|webm)$/i.test(file.name);
+    var li = document.createElement("li"); li.className = "q";
+    li.innerHTML = '<span class="th"></span><div class="meta"><div class="nm"></div><div class="st">Sırada</div><div class="bar"><i></i></div></div><span class="side"></span>';
+    li.querySelector(".nm").textContent = (isVid ? "🎬 " : "") + (file.name || "fotoğraf");
+    if(!isVid && /^image\/(jpeg|png|webp|gif)/.test(file.type)){
+      var tu = URL.createObjectURL(file); li.querySelector(".th").style.backgroundImage = "url('"+tu+"')";
+    }
+    queueEl.prepend(li);
+    var job = {file:file, isVid:isVid, li:li, tries:0};
+    if(isVid && file.size > MAX_VID){ failJob(job, "Video çok büyük ("+fmtMB(file.size)+"). 100 MB altında bir video seçin.", false); return; }
+    jobs.push(job);
+  }
+  function setSt(job, txt, pct){
+    job.li.querySelector(".st").textContent = txt;
+    if(pct != null) job.li.querySelector(".bar i").style.width = pct + "%";
+  }
+  function failJob(job, msg, retry){
+    job.li.className = "q fail"; setSt(job, msg, 100);
+    var side = job.li.querySelector(".side"); side.innerHTML = "";
+    if(retry){
+      var b = document.createElement("button"); b.className = "act"; b.type = "button"; b.textContent = "Tekrar";
+      b.onclick = function(){ job.li.className = "q"; side.innerHTML = ""; job.tries = 0; jobs.push(job); pump(); };
+      side.appendChild(b);
+    }
+  }
+  function pump(){
+    updateSummary();
+    while(active < CONC && jobs.length){ var j = jobs.shift(); active++; run(j); }
+  }
+  function run(job){
+    prepare(job).then(function(blob){
+      if(!job.isVid && blob.size > MAX_IMG) throw {fatal:true, msg:"Fotoğraf çok büyük ("+fmtMB(blob.size)+")."};
+      return send(job, blob);
+    }).then(function(res){
+      job.li.className = "q done"; setSt(job, "Yüklendi", 100);
+      job.li.querySelector(".side").innerHTML = IC_OK;
+      okCount++;
+      var it = {kind: res.resource_type === "video" ? "video" : "image", public_id: res.public_id,
+                version: res.version, format: res.format, created_at: res.created_at, guest: guest.value.trim()};
+      rememberLocal(it);
+      items = items.filter(function(x){ return x.public_id !== it.public_id; }); items.unshift(it); render();
+    }).catch(function(err){
+      if(err && err.fatal){ failJob(job, err.msg, false); return; }
+      job.tries++;
+      if(job.tries < 4){
+        setSt(job, "Bağlantı zayıf, tekrar deneniyor (" + job.tries + "/3)…", 0);
+        return sleep(1500 * job.tries).then(function(){ jobs.unshift(job); });
+      }
+      failJob(job, (err && err.msg) || "Yüklenemedi. İnternet gelince 'Tekrar'a basın.", true);
+    }).then(function(){ active--; pump(); });
+  }
+
+  // büyük fotoğrafları küçült (3200 px, %88 kalite) — zayıf çekimde çok daha hızlı, galeri kalitesi yine yüksek
+  function prepare(job){
+    var f = job.file;
+    if(job.isVid || !/^image\/(jpeg|png|webp)$/.test(f.type) || f.size < 2.5*1048576 || !window.createImageBitmap)
+      return Promise.resolve(f);
+    setSt(job, "Hazırlanıyor…", 2);
+    return createImageBitmap(f, {imageOrientation:"from-image"}).then(function(bmp){
+      var max = 3200, w = bmp.width, h = bmp.height, s = Math.min(1, max / Math.max(w, h));
+      var cw = Math.round(w*s), ch = Math.round(h*s);
+      var cv = document.createElement("canvas"); cv.width = cw; cv.height = ch;
+      cv.getContext("2d").drawImage(bmp, 0, 0, cw, ch); if(bmp.close) bmp.close();
+      return new Promise(function(res){ cv.toBlob(function(b){ res(b && b.size < f.size ? b : f); }, "image/jpeg", 0.88); });
+    }).catch(function(){ return f; });
+  }
+
+  function send(job, blob){
+    return new Promise(function(resolve, reject){
+      var fd = new FormData();
+      var name = job.file.name || ("dosya-" + Date.now());
+      if(blob !== job.file) name = name.replace(/\.[^.]+$/, "") + ".jpg";
+      fd.append("file", blob, name);
+      fd.append("upload_preset", C.PRESET);
+      fd.append("tags", C.TAG);
+      var g = guest.value.trim().replace(/[|=]/g, " ").slice(0, 40);
+      if(g) fd.append("context", "guest=" + g);
+      var x = new XMLHttpRequest();
+      x.open("POST", API);
+      x.timeout = job.isVid ? 0 : 180000;
+      x.upload.onprogress = function(e){ if(e.lengthComputable) setSt(job, "Yükleniyor %" + Math.round(e.loaded/e.total*100), Math.max(3, e.loaded/e.total*96)); };
+      x.onload = function(){
+        var j = null; try{ j = JSON.parse(x.responseText); }catch(e){}
+        if(x.status >= 200 && x.status < 300 && j && j.public_id) return resolve(j);
+        var m = j && j.error && j.error.message || ("Hata " + x.status);
+        if(x.status >= 400 && x.status < 500 && x.status !== 408 && x.status !== 429)
+          return reject({fatal:true, msg:"Yüklenemedi: " + m});
+        reject({msg:m});
+      };
+      x.onerror = function(){ reject({msg:"Bağlantı koptu."}); };
+      x.ontimeout = function(){ reject({msg:"Zaman aşımı."}); };
+      setSt(job, "Yükleniyor…", 3);
+      x.send(fd);
+    });
+  }
+
+  function updateSummary(){
+    var pending = jobs.length + active;
+    $("summary").textContent = pending ? "" : (okCount ? okCount + " dosya paylaşıldı, teşekkürler! 🤍" : "");
+  }
+  window.addEventListener("beforeunload", function(e){
+    if(jobs.length + active > 0){ e.preventDefault(); e.returnValue = ""; }
+  });
+
+  loadGallery(true);
+})();
+</script>
+</body>
+</html>
