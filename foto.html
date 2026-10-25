@@ -21,7 +21,11 @@
 window.FOTO_AYAR = {
   CLOUD_NAME: "kduu6apu", // Cloudinary panelinde "Cloud name" (örn. dxk3abc12)
   PRESET:     "dugun_foto",        // Unsigned upload preset adı
-  TAG:        "dugun"              // Tüm yüklemelere eklenen etiket (galeri bununla listelenir)
+  TAG:        "dugun",             // Fotoğraf etiketi (galeri bununla listelenir)
+  VIDEO_TAG:  "dugun_video",       // Video etiketi — videolar galeride gösterilmez, sadece size gelir
+  VIDEO_MB:        100,            // Tek video için en büyük boyut (MB)
+  VIDEO_PER_PHONE: 3,              // Bir telefondan en fazla kaç video
+  VIDEO_TOTAL:     100             // Düğün boyunca toplam en fazla kaç video
 };
 /* ▲▲▲ ------------------------------------------------------------------ ▲▲▲ */
 </script>
@@ -184,7 +188,7 @@ window.FOTO_AYAR = {
     <h1 class="names">SENA<em>VE</em>MURATHAN</h1>
     <p class="date">30 · EKİM · 2026</p>
     <span class="rule" aria-hidden="true"></span>
-    <p class="lead">Bu geceden çektiğiniz fotoğraf ve videoları buraya ekleyin; herkesin çektiklerini aşağıda görüp telefonunuza kaydedebilirsiniz.</p>
+    <p class="lead">Bu geceden çektiğiniz fotoğraf ve videoları buraya ekleyin. Fotoğrafları aşağıda herkes görüp telefonuna kaydedebilir; videolar yalnızca bize iletilir.</p>
   </header>
 
   <div class="setup" id="setupNote">Sayfa henüz bağlanmadı: <code>foto.html</code> içindeki <b>CLOUD_NAME</b> ayarını doldurun.</div>
@@ -197,7 +201,7 @@ window.FOTO_AYAR = {
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.7l1.3-2h5l1.3 2h1.7A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.4" r="3.4"/></svg>
       FOTOĞRAF / VİDEO EKLE
     </button>
-    <p class="fine">Birden fazla seçebilirsiniz. Çekim zayıfsa sorun değil, eve dönünce de yükleyebilirsiniz.</p>
+    <p class="fine">Birden fazla seçebilirsiniz. Videolar: telefon başına en fazla <span id="vidLeft">3</span>, her biri en fazla ~1,5 dakika. Çekim zayıfsa sorun değil, eve dönünce de yükleyebilirsiniz.</p>
     <ul class="queue" id="queue"></ul>
     <p class="summary" id="summary"></p>
   </section>
@@ -252,7 +256,7 @@ window.FOTO_AYAR = {
   var CONFIGURED = CLOUD && CLOUD.indexOf("BURAYA") !== 0;
   var API = "https://api.cloudinary.com/v1_1/" + CLOUD + "/auto/upload";
   var RES = "https://res.cloudinary.com/" + CLOUD;
-  var MAX_IMG = 10 * 1024 * 1024, MAX_VID = 100 * 1024 * 1024;
+  var MAX_IMG = 10 * 1024 * 1024, MAX_VID = C.VIDEO_MB * 1024 * 1024;
   var PAGE = 60;
 
   var $ = function(id){ return document.getElementById(id); };
@@ -268,7 +272,7 @@ window.FOTO_AYAR = {
     clearTimeout(tT); tT=setTimeout(function(){ t.classList.remove("show"); }, ms||2600); }
   function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; } }
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
-  function fmtMB(b){ return (b/1048576).toFixed(b<10485760?1:0)+" MB"; }
+  function fmtMB(b){ var m=b/1048576; return (m<10 ? m.toFixed(1) : Math.ceil(m))+" MB"; }
   var sleep = function(ms){ return new Promise(function(r){ setTimeout(r,ms); }); };
 
   var savedName = store("foto-ad"); if(savedName) guest.value = savedName;
@@ -315,7 +319,7 @@ window.FOTO_AYAR = {
   var LOCAL_TTL = 10 * 60 * 1000;
   function localItems(){
     var l; try{ l = JSON.parse(store(localKey)||"[]"); }catch(e){ l = []; }
-    var now = Date.now(), fresh = l.filter(function(x){ return x.savedAt && now - x.savedAt < LOCAL_TTL; });
+    var now = Date.now(), fresh = l.filter(function(x){ return x.kind === "image" && x.savedAt && now - x.savedAt < LOCAL_TTL; });
     if(fresh.length !== l.length) store(localKey, JSON.stringify(fresh));
     return fresh;
   }
@@ -328,9 +332,8 @@ window.FOTO_AYAR = {
   function loadGallery(silent){
     if(!CONFIGURED){ render(); return Promise.resolve(); }
     if(loading) return Promise.resolve(); loading = true;
-    return Promise.all([fetchList("image"), fetchList("video").catch(function(){ return []; })])
-      .then(function(res){
-        var all = res[0].concat(res[1]);
+    return fetchList("image")
+      .then(function(all){
         var ids = new Set(all.map(function(x){ return x.public_id; }));
         // yeni yüklenenler listede henüz görünmüyorsa (önbellek) kendi cihazında yine göster
         localItems().forEach(function(x){ if(!ids.has(x.public_id)) all.push(x); });
@@ -504,6 +507,28 @@ window.FOTO_AYAR = {
   });
 
   var jobs = [], active = 0, CONC = 2, okCount = 0;
+
+  // ---------- video hakları ----------
+  var VID_KEY = "foto-video-sayisi", pendingVids = 0, totalCache = null;
+  function vidsUsed(){ return parseInt(store(VID_KEY) || "0", 10) || 0; }
+  function vidsLeft(){ return Math.max(0, C.VIDEO_PER_PHONE - vidsUsed() - pendingVids); }
+  function showVidLeft(){
+    var used = vidsUsed() + pendingVids, el = $("vidLeft");
+    el.textContent = used ? C.VIDEO_PER_PHONE + " (kalan hakkınız: " + vidsLeft() + ")" : C.VIDEO_PER_PHONE;
+  }
+  // düğün boyunca yüklenen toplam video sayısı (Cloudinary listesi ~1 dk gecikmeli olabilir)
+  function videoTotal(){
+    if(totalCache && Date.now() - totalCache.t < 20000) return Promise.resolve(totalCache.n);
+    return fetch(RES + "/video/list/" + encodeURIComponent(C.VIDEO_TAG) + ".json?t=" + Date.now(), {cache:"no-store"})
+      .then(function(r){
+        if(r.status === 404) return 0;
+        if(!r.ok) return null;
+        return r.json().then(function(j){ return (j.resources || []).length; });
+      })
+      .then(function(n){ if(n != null) totalCache = {n:n, t:Date.now()}; return n; })
+      .catch(function(){ return null; });   // sayılamazsa yüklemeye izin ver
+  }
+  showVidLeft();
   var IC_OK = '<svg class="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
   function enqueue(file){
@@ -516,7 +541,9 @@ window.FOTO_AYAR = {
     }
     queueEl.prepend(li);
     var job = {file:file, isVid:isVid, li:li, tries:0};
-    if(isVid && file.size > MAX_VID){ failJob(job, "Video çok büyük ("+fmtMB(file.size)+"). 100 MB altında bir video seçin.", false); return; }
+    if(isVid && file.size > MAX_VID){ failJob(job, "Video çok büyük ("+fmtMB(file.size)+"). En fazla ~1,5 dakikalık ("+C.VIDEO_MB+" MB) bir video seçin.", false); return; }
+    if(isVid && vidsLeft() <= 0){ failJob(job, "Video hakkınız doldu (telefon başına en fazla "+C.VIDEO_PER_PHONE+"). Fotoğraf eklemeye devam edebilirsiniz.", false); return; }
+    if(isVid){ pendingVids++; job.vidReserved = true; showVidLeft(); }
     jobs.push(job);
   }
   function setSt(job, txt, pct){
@@ -524,6 +551,7 @@ window.FOTO_AYAR = {
     if(pct != null) job.li.querySelector(".bar i").style.width = pct + "%";
   }
   function failJob(job, msg, retry){
+    if(!retry && job.vidReserved){ job.vidReserved = false; pendingVids--; showVidLeft(); }
     job.li.className = "q fail"; setSt(job, msg, 100);
     var side = job.li.querySelector(".side"); side.innerHTML = "";
     if(retry){
@@ -537,13 +565,25 @@ window.FOTO_AYAR = {
     while(active < CONC && jobs.length){ var j = jobs.shift(); active++; run(j); }
   }
   function run(job){
-    prepare(job).then(function(blob){
+    var gate = job.isVid ? videoTotal().then(function(n){
+      if(n != null && n >= C.VIDEO_TOTAL)
+        throw {fatal:true, msg:"Video kontenjanı doldu, teşekkürler! Fotoğraf eklemeye devam edebilirsiniz."};
+    }) : Promise.resolve();
+    gate.then(function(){ return prepare(job); }).then(function(blob){
       if(!job.isVid && blob.size > MAX_IMG) throw {fatal:true, msg:"Fotoğraf çok büyük ("+fmtMB(blob.size)+")."};
       return send(job, blob);
     }).then(function(res){
-      job.li.className = "q done"; setSt(job, "Yüklendi", 100);
+      job.li.className = "q done";
       job.li.querySelector(".side").innerHTML = IC_OK;
       okCount++;
+      if(job.isVid){
+        setSt(job, "Yüklendi · yalnızca Sena ve Murathan'a iletildi", 100);
+        job.vidReserved = false; pendingVids--;
+        store(VID_KEY, String(vidsUsed() + 1)); showVidLeft();
+        if(totalCache) totalCache.n++;
+        return;
+      }
+      setSt(job, "Yüklendi", 100);
       var it = {kind: res.resource_type === "video" ? "video" : "image", public_id: res.public_id,
                 version: res.version, format: res.format, created_at: res.created_at, guest: guest.value.trim()};
       rememberLocal(it);
@@ -581,7 +621,7 @@ window.FOTO_AYAR = {
       if(blob !== job.file) name = name.replace(/\.[^.]+$/, "") + ".jpg";
       fd.append("file", blob, name);
       fd.append("upload_preset", C.PRESET);
-      fd.append("tags", C.TAG);
+      fd.append("tags", job.isVid ? C.VIDEO_TAG : C.TAG);
       var g = guest.value.trim().replace(/[|=]/g, " ").slice(0, 40);
       if(g) fd.append("context", "guest=" + g);
       var x = new XMLHttpRequest();
